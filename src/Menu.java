@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class Menu {
@@ -6,6 +7,15 @@ public class Menu {
 
     public Menu() {
         this.scanner = new Scanner(System.in);
+    }
+
+    public void init() {
+        int option = 0;
+        while (option != 6) {
+            showMenu();
+            option = getOption();
+            selectOption(option);
+        }
     }
 
     private void showMenu() {
@@ -19,12 +29,40 @@ public class Menu {
         System.out.print("Escolha uma opção:\n");
     }
 
+    //retorna a escolha do usuário do menu
     public int getOption() {
         try {
             int option = Integer.parseInt(scanner.next());
             return option;
         } catch (NumberFormatException e) {
             return 0;
+        }
+    }
+
+    public void selectOption(int option) {
+        switch (option) {
+            case 1 -> {
+                //TODO: Cadastrar novo pet  
+            }
+            case 2 -> {
+                //TODO: Editar um pet 
+            }
+            case 3 -> {
+                //TODO: DELETAR PET
+            }
+            case 4 -> {
+                //TODO: LISTAR TODOS OS PETS  
+            }
+            case 5 -> {
+                //TODO: LISTAR PETS POR FILTRO(IDADE, NOME, RAÇA)
+            }
+            case 6 -> {
+                System.out.println("Saindo...");
+            }
+
+            default -> {
+                System.out.println("Opção inválida, tente novamente.");
+            }
         }
     }
 }
