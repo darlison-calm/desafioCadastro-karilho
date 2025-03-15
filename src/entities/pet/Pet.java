@@ -1,5 +1,8 @@
 package entities.pet;
 
+import enums.PetGender;
+import enums.PetType;
+
 public class Pet {
     private String name;
     private String surname;
@@ -9,8 +12,8 @@ public class Pet {
     private Integer age;
     private Float weight;
     private String breed;
-    private PetGenderEnum gender;
-
+    private PetGender gender;
+    private PetType type;
     protected Pet() {
 
     }
