@@ -1,4 +1,5 @@
 import data.FileHandler;
+import utils.StringUtils;
 
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +17,7 @@ public class Menu {
         while (option != 6) {
             showMenu();
             option = getOption();
-            selectOption(option);
+            selectOptionFromMenu(option);
         }
         scanner.close();
     }
@@ -41,7 +42,7 @@ public class Menu {
         }
     }
 
-    private void selectOption(int option) {
+    private void selectOptionFromMenu(int option) {
         switch (option) {
             case 1 -> {
                 //TODO: CADASTRAR UM NOVO PET
@@ -49,12 +50,18 @@ public class Menu {
                 System.out.println("\n===== CADASTRO DE NOVO PET =====");
                 for (String question: questions) {
                     System.out.println(question);
-                    String answer = scanner.nextLine();
-                    System.out.println(answer);
+                    int questionNumber = StringUtils.getQuestionNumber(question);
+
                 }
             }
             case 6 -> System.out.println("Saindo...");
             default -> System.out.println("Opção inválida, tente novamente.");
         }
     }
+
+//    private  getRestriction(int) {
+//        re
+//    }
+
+
 }
