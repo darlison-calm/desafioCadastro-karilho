@@ -1,4 +1,5 @@
 import data.FileHandler;
+import entities.pet.PetInputValidator;
 import utils.StringUtils;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class Menu {
         System.out.print("Escolha uma opção:\n");
     }
 
-    //retorna a escolha do usuário do menu
+    //Retorna o número da escolha do usuário do menu
     private int getOption() {
         try {
             return Integer.parseInt(scanner.nextLine());
@@ -45,23 +46,48 @@ public class Menu {
     private void selectOptionFromMenu(int option) {
         switch (option) {
             case 1 -> {
-                //TODO: CADASTRAR UM NOVO PET
-                List<String> questions = FileHandler.getQuestionsFromFile();
-                System.out.println("\n===== CADASTRO DE NOVO PET =====");
-                for (String question: questions) {
-                    System.out.println(question);
-                    int questionNumber = StringUtils.getQuestionNumber(question);
-
-                }
+                insertNewPet();
             }
             case 6 -> System.out.println("Saindo...");
             default -> System.out.println("Opção inválida, tente novamente.");
         }
     }
 
-//    private  getRestriction(int) {
-//        re
-//    }
+    private void checkAnswerInput(int questionNumber, String answer) throws Exception {
+        switch (questionNumber) {
+            case 1:
+                if (!PetInputValidator.validatePetName(answer)) {
+                    throw new Exception("Nome do pet inválido deve conter nome e sobrenome (apenas letras).");
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
+    private void insertNewPet() {
+        List<String> questions = FileHandler.getQuestionsFromFile();
+        System.out.println("\n===== CADASTRO DE NOVO PET =====");
 
+        for (String question : questions) {
+            int questionNumber = StringUtils.getQuestionNumber(question);
+            String answer;
+            while (true) {
+                try {
+                    System.out.println(question);
+                    answer = scanner.nextLine();
+
+                    if (answer.equalsIgnoreCase("cancelar")) {
+                        System.out.println("Cadastro cancelado.");
+                        return;
+                    }
+                    checkAnswerInput(questionNumber, answer);
+                    System.out.println("Resposta:" + answer);
+                    break;
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
 }

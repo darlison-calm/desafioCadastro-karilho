@@ -6,6 +6,6 @@ public class PetInputValidator {
         if (name == null) {
             return false;
         }
-        return name.matches("(?i)[ \n]+[a-zA-Z]+");
+        return name.trim().matches("[A-Za-z]+ [A-Za-z]+");
     }
 }
