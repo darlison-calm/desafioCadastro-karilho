@@ -1,5 +1,6 @@
 package entities.pet;
 
+import enums.PetGender;
 import enums.PetType;
 
 public class PetInputValidator {
@@ -11,9 +12,21 @@ public class PetInputValidator {
         return name.trim().matches("[A-Za-z]+ [A-Za-z]+");
     }
 
-    public static boolean isValidPetType(String petType) {
-        return petType.equalsIgnoreCase(PetType.CAT.getDescription()) ||
-                petType.equalsIgnoreCase(PetType.DOG.getDescription());
+    public static PetType validatePetType(String petTypeString) {
+        for (PetType type : PetType.values()) {
+            if (type.getDescription().equalsIgnoreCase(petTypeString)) {
+                return type;
+            }
+        }
+        return null;
     }
 
+    public static PetGender validatePetGender(String petGender) {
+        for (PetGender gender : PetGender.values()) {
+            if (gender.getDescription().equalsIgnoreCase(petGender)) {
+                return gender;
+            }
+        }
+        return null;
+    }
 }
