@@ -1,16 +1,15 @@
 package entities.pet;
 
 public class PetAddress {
-    private int houseNumber;
+    private String houseNumber;
     private String city;
     private String street;
 
-    public PetAddress(int houseNumber, String city, String street) {
+    public PetAddress(String houseNumber, String city, String street) {
         this.houseNumber = houseNumber;
         this.city = city;
         this.street = street;
     }
-
     public String getStreet() {
         return street;
     }
@@ -27,11 +26,11 @@ public class PetAddress {
         this.city = city;
     }
 
-    public int getHouseNumber() {
+    public String getHouseNumber() {
         return houseNumber;
     }
 
-    public void setHouseNumber(int houseNumber) {
+    public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
     }
 }
