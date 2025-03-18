@@ -1,8 +1,9 @@
 package controllers;
 
 import data.FileHandler;
-import entities.pet.Pet;
-import entities.pet.PetInputValidator;
+import entities.pet.PetAddress;
+import entities.pet.PetModel;
+import services.pet.PetInputValidator;
 import enums.PetGender;
 import enums.PetType;
 import utils.StringUtils;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PetSystem {
-
+    private final String NOT_INFORMED_DATA = "NÃO INFORMADO";
     private final Scanner scanner;
 
     public PetSystem() {
@@ -28,29 +29,32 @@ public class PetSystem {
     }
 
     private void showMenu() {
-        System.out.println("\n===== SISTEMA DE GERENCIAMENTO DE PETS =====");
-        System.out.println("1. Cadastrar um novo pet");
-        System.out.println("2. Alterar os dados do pet cadastrado");
-        System.out.println("3. Deletar um pet cadastrado");
-        System.out.println("4. Listar todos os pets cadastrados");
-        System.out.println("5. Listar pets por algum critério (idade, nome, raça)");
-        System.out.println("6. Sair");
-        System.out.print("Escolha uma opção:\n");
+        System.out.println("========================================================");
+        System.out.println("| 1 - Cadastrar um novo pet                            |");
+        System.out.println("| 2 - Alterar dados de um pet cadastrado               |");
+        System.out.println("| 3 - Deletar um pet cadastrado                        |");
+        System.out.println("| 4 - Listar todos os pets cadastrados                 |");
+        System.out.println("| 5 - Listar pets por algum critério (idade,nome,raça) |");
+        System.out.println("| 6 - Sair                                             |");
+        System.out.println("========================================================");
+        System.out.print("Digite: ");
     }
 
     private void insertNewPet() {
         List<String> questions = FileHandler.getQuestionsFromFile();
         System.out.println("\n===== CADASTRO DE NOVO PET =====");
-        Pet pet = new Pet();
-
-        for (String question : questions) {
-            int questionNumber = StringUtils.getQuestionNumber(question);
-
+        PetModel pet = new PetModel();
+        int questionsCount = questions.size();
+        for (int i = 0; i < questionsCount; i++) {
+            int questionNumber = StringUtils.getQuestionNumber(questions.get(i));
             while (true) {
                 try {
-                    System.out.println(question);
-                    String answer = scanner.nextLine();
+                    System.out.println(questions.get(i));
+                    String answer = "";
 
+                    if (i != 3) {
+                        answer = scanner.nextLine();
+                    }
                     if (answer.equalsIgnoreCase("cancelar")) {
                         System.out.println("Cadastro cancelado.");
                         return;
@@ -62,16 +66,18 @@ public class PetSystem {
                 }
             }
         }
-        System.out.println(pet.getName() +" " + pet.getName());
     }
 
-    private void processPetAnswer(int questionNumber, String answer, Pet pet) throws Exception {
+    private void processPetAnswer(int questionNumber, String answer, PetModel pet) throws Exception {
         switch (questionNumber) {
             case 1:
-                if (!PetInputValidator.isValidPetName(answer)) {
-                    throw new Exception("Nome do pet inválido deve conter nome e sobrenome (apenas letras).");
+                if (answer.trim().isEmpty()) {
+                    pet.setName(NOT_INFORMED_DATA);
+                } else if (!PetInputValidator.isValidPetName(answer)) {
+                    throw new Exception("Nome do pet inválido: deve conter nome e sobrenome (apenas letras).");
+                } else {
+                    pet.setName(answer);
                 }
-                pet.setName(answer);
                 break;
             case 2:
                 PetType petType = PetInputValidator.validatePetType(answer);
@@ -86,6 +92,11 @@ public class PetSystem {
                     throw new Exception("Resposta inválida: Macho ou Fêmea");
                 }
                 pet.setGender(petGender);
+                break;
+            case 4:
+                if (!processAddressInput(pet)) {
+                    throw new Exception("Cadastro cancelado pelo usuário");
+                }
                 break;
             default:
                 break;
@@ -109,4 +120,57 @@ public class PetSystem {
         }
     }
 
+    private boolean processAddressInput(PetModel pet) {
+        while (true) {
+            try {
+                System.out.println("Numero:");
+                String numberInput = scanner.nextLine();
+
+                if (numberInput.equalsIgnoreCase("cancelar")) {
+                    System.out.println("Cadastro cancelado.");
+                    return false;
+                }
+
+                // Valida se o número da casa é realmente um número (se fornecido)
+                if (!numberInput.trim().isEmpty()) {
+                   Integer.parseInt(numberInput);
+                   // Se o campo estiver vazio, define como "Não informado"
+                } else {
+                    numberInput = NOT_INFORMED_DATA;
+                }
+
+                System.out.println("Cidade:");
+                String city = scanner.nextLine();
+
+                if (city.equalsIgnoreCase("cancelar")) {
+                    System.out.println("Cadastro cancelado.");
+                    return false;
+                }
+
+                if (city.trim().isEmpty()) {
+                    System.out.println("Cidade não pode estar vazia.");
+                    continue;
+                }
+
+                System.out.println("Nome da rua:");
+                String street = scanner.nextLine();
+
+                if (street.equalsIgnoreCase("cancelar")) {
+                    System.out.println("Cadastro cancelado.");
+                    return false;
+                }
+
+                if (street.trim().isEmpty()) {
+                    System.out.println("Nome da rua não pode estar vazio.");
+                    continue;
+                }
+
+                PetAddress address = new PetAddress(numberInput, city, street);
+                pet.setAddress(address);
+                return true;
+            } catch (NumberFormatException e) {
+                System.out.println("Número inválido. Por favor, digite um número inteiro.");
+            }
+        }
+    }
 }

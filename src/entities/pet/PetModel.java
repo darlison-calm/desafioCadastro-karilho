@@ -3,7 +3,7 @@ package entities.pet;
 import enums.PetGender;
 import enums.PetType;
 
-public class Pet {
+public class PetModel {
     private PetAddress address;
     private String name;
     private Integer age;
@@ -11,8 +11,16 @@ public class Pet {
     private String breed;
     private PetGender gender;
     private PetType type;
-    public Pet() {
+    public PetModel() {
 
+    }
+
+    public PetAddress getAddress() {
+        return address;
+    }
+
+    public void setAddress(PetAddress address) {
+        this.address = address;
     }
 
     public PetType getType() {
