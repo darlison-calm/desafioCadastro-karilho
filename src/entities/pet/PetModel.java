@@ -1,15 +1,15 @@
 package entities.pet;
 
-import enums.PetGender;
+import enums.PetSex;
 import enums.PetType;
 
 public class PetModel {
     private PetAddress address;
     private String name;
-    private Integer age;
+    private Float age;
     private Float weight;
     private String breed;
-    private PetGender gender;
+    private PetSex gender;
     private PetType type;
     public PetModel() {
 
@@ -39,12 +39,21 @@ public class PetModel {
         this.name = name;
     }
 
-    public PetGender getGender() {
+    public PetSex getSex() {
         return gender;
     }
 
-    public void setGender(PetGender gender) {
+    public void setSex(PetSex gender) {
         this.gender = gender;
+    }
+
+
+    public Float getAge() {
+        return age;
+    }
+
+    public void setAge(Float age) {
+        this.age = age;
     }
 }
 

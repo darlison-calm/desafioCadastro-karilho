@@ -1,6 +1,6 @@
 package enums;
 
-public enum PetGender {
+public enum PetSex {
     MALE("Macho"),
     FEMALE("Fêmea");
 
@@ -9,7 +9,7 @@ public enum PetGender {
     public String getDescription() {
         return description;
     }
-    PetGender(String description) {
+    PetSex(String description) {
         this.description = description;
     }
 }
