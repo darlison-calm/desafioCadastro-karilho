@@ -4,6 +4,7 @@ import data.FileHandler;
 import entities.pet.PetModel;
 import services.pet.PetService;
 import utils.StringUtils;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,6 +20,7 @@ public class PetSystem {
 
     public void init() {
         int option = 0;
+        FileHandler.createPetsDirectory();
         while (option != 6) {
             showMenu();
             option = getMenuOption();
@@ -70,6 +72,7 @@ public class PetSystem {
                 }
             }
         }
+        FileHandler.createPetFile(pet);
     }
 
     //Retorna o número da escolha do usuário do menu

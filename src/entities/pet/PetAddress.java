@@ -10,6 +10,10 @@ public class PetAddress {
         this.city = city;
         this.street = street;
     }
+
+    public String formatAddress() {
+        return "Rua: "+ this.street + ", " + this.houseNumber+ ", " + this.city;
+    }
     public String getStreet() {
         return street;
     }

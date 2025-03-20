@@ -3,16 +3,24 @@ package entities.pet;
 import enums.PetSex;
 import enums.PetType;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class PetModel {
     private PetAddress address;
     private String name;
     private Float age;
     private Float weight;
     private String breed;
-    private PetSex gender;
+    private PetSex sex;
     private PetType type;
+    private final LocalDateTime creationDate;
     public PetModel() {
+        this.creationDate = LocalDateTime.now();
+    };
 
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
     public PetAddress getAddress() {
@@ -40,13 +48,12 @@ public class PetModel {
     }
 
     public PetSex getSex() {
-        return gender;
+        return sex;
     }
 
     public void setSex(PetSex gender) {
-        this.gender = gender;
+        this.sex = gender;
     }
-
 
     public Float getAge() {
         return age;
@@ -54,6 +61,22 @@ public class PetModel {
 
     public void setAge(Float age) {
         this.age = age;
+    }
+
+    public Float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Float weight) {
+        this.weight = weight;
+    }
+
+    public String getBreed() {
+        return breed;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 }
 

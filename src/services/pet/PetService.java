@@ -18,28 +18,34 @@
 
         public void processPetAnswer(int questionNumber, String answer, PetModel pet) throws Exception {
             switch (questionNumber) {
-                // PERGUNTA NOME
                 case 1:
-                    validatePetName(answer);
+                    validateName(answer);
                     setPetName(answer, pet);
                     break;
                 case 2:
-                    PetType petType = validatePetType(answer);
+                    PetType petType = validateType(answer);
                     pet.setType(petType);
                     break;
                 case 3:
-                    PetSex sexPet = validatePetSex(answer);
+                    PetSex sexPet = validateSex(answer);
                     pet.setSex(sexPet);
                     break;
                 case 4:
-                    PetAddress address = processAddressInput();
+                    PetAddress address = validateAddress();
                     pet.setAddress(address);
                     break;
                 case 5:
-                    float petAge = processAgeInput(answer);
+                    float petAge = validateAge(answer);
                     pet.setAge(petAge);
-//                default:
-//                    throw new Exception("Número da pergunta inválido.");
+                    break;
+                case 6:
+                    float petWeight = validateWeight(answer);
+                    pet.setWeight(petWeight);
+                    break;
+                case 7:
+                    String petBreed = validateBreed(answer);
+                    pet.setBreed(petBreed);
+                    break;
             }
         }
 
@@ -50,14 +56,14 @@
             pet.setName(name);
         }
 
-        private void validatePetName(String name) throws Exception {
+        private void validateName(String name) throws Exception {
             boolean isValidPetName = name.trim().matches("[A-Za-z]+ [A-Za-z]+");
             if (!isValidPetName) {
                 throw new Exception("Nome e Sobrenome só devem conter letras");
             }
         }
 
-        private PetType validatePetType(String petType) throws Exception {
+        private PetType validateType(String petType) throws Exception {
             for (PetType type : PetType.values()) {
                 if (petType.trim().equalsIgnoreCase(type.getDescription())) {
                    return type;
@@ -66,7 +72,7 @@
             throw new Exception("TIPO CACHORRO/GATO - cachorro/gato");
         }
 
-        private PetSex validatePetSex(String petGender) throws Exception {
+        private PetSex validateSex(String petGender) throws Exception {
             for (PetSex gender : PetSex.values()) {
                 if (petGender.trim().equalsIgnoreCase(gender.getDescription())) {
                     return gender;
@@ -74,7 +80,7 @@
             }
             throw new Exception("GÊNERO INVÁLIDO - Use 'Macho' ou 'Fêmea'.");
         }
-        private PetAddress processAddressInput() throws Exception {
+        private PetAddress validateAddress() throws Exception {
             String numberInput;
             String city;
             String street;
@@ -120,11 +126,27 @@
             return new PetAddress(numberInput, city, street);
         }
 
-        private float processAgeInput(String age) throws Exception {
-            float petAge = Float.parseFloat(age);
+        private float validateAge(String age) throws Exception {
+           float petAge = Float.parseFloat(age);
             if (petAge > 240) {
                 throw new Exception("Idade não pode ser maior que 20 anos. Idade em meses");
             }
             return petAge/12;
+        }
+
+        private float validateWeight(String weight) throws Exception {
+            float petWeight = Float.parseFloat(weight);
+            if((petWeight > 60) || (petWeight < 0.5)) {
+                throw new Exception("PESO NÃO PODE SER MENOR QUE 0.5 OU MAIOR QUE 60");
+            }
+            return petWeight;
+        }
+
+        private String validateBreed(String breed) throws Exception {
+            boolean isValidBreed = breed.trim().matches("[A-Za-z ]+");
+            if (!isValidBreed) {
+                throw new Exception("Raça não pode numeros ou caracteres especiais.");
+            }
+            return breed;
         }
     }
