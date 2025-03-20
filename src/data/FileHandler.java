@@ -45,7 +45,8 @@ public class FileHandler {
                 pet.getType().getDescription(),
                 pet.getSex().getDescription(),
                 pet.getAddress().formatAddress(),
-                pet.getAge(),
+                pet.getAge() + "ano",
+                pet.getWeight()+"kg",
                 pet.getBreed()
         ));
     }
@@ -53,8 +54,8 @@ public class FileHandler {
     public static String getFileTitle(PetModel pet) {
         LocalDateTime dateCreation = pet.getCreationDate();
         String petName = pet.getName().toUpperCase().replaceAll("\\s", "");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        return dateCreation.format(formatter)+"T"+dateCreation.getHour()+dateCreation.getMinute()+petName;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmm");
+        return dateCreation.format(formatter)+petName;
     }
 
     public static void createPetFile(PetModel pet) {

@@ -12,7 +12,7 @@ public class PetAddress {
     }
 
     public String formatAddress() {
-        return "Rua: "+ this.street + ", " + this.houseNumber+ ", " + this.city;
+        return "Rua "+ this.street + ", " + this.houseNumber+ ", " + this.city;
     }
     public String getStreet() {
         return street;
