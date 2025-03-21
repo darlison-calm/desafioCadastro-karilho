@@ -55,18 +55,19 @@ public class FileHandler {
         LocalDateTime dateCreation = pet.getCreationDate();
         String petName = pet.getName().toUpperCase().replaceAll("\\s", "");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmm");
-        return dateCreation.format(formatter)+petName;
+        return dateCreation.format(formatter)+"-"+petName;
     }
 
     public static void createPetFile(PetModel pet) {
         ArrayList<Object> content = getFileContent(pet);
         int contentSize = content.size();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PET_DIRECTORY+"/"+getFileTitle(pet)))) {
+        try  {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(PET_DIRECTORY+"/"+getFileTitle(pet)));
             for (int i = 0; i < contentSize; i++) {
                 writer.write((i + 1) + " - " + content.get(i));
                 writer.newLine();
             }
-            System.out.println("Pet cadastrado com sucesso!");
+            writer.close();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

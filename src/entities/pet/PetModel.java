@@ -3,7 +3,6 @@ package entities.pet;
 import enums.PetSex;
 import enums.PetType;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class PetModel {
@@ -17,7 +16,7 @@ public class PetModel {
     private final LocalDateTime creationDate;
     public PetModel() {
         this.creationDate = LocalDateTime.now();
-    };
+    }
 
     public LocalDateTime getCreationDate() {
         return creationDate;
